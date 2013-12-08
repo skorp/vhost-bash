@@ -16,7 +16,7 @@ read hostName
 if [ ! -z "$hostName" ]
 then
 	echo "Add the host to the local hosts file";
-	echo ${host} ${hostName} >> /etc/hosts
+	echo ${host} ${hostName} www.${hostName} *.${hostName} >> /etc/hosts
 fi
 
 ssh -o StrictHostKeyChecking=no -l ${username} ${host} << EOF
@@ -43,6 +43,7 @@ then
 	echo "<VirtualHost *:80>
         DocumentRoot /var/www/html/$directoryName/
         ServerName $hostName
+        ServerAlias *.$hostName www.$hostName
         <Directory /var/www/html/$directoryName/>
                 Options +Indexes +FollowSymLinks +MultiViews +Includes
                 AllowOverride All
